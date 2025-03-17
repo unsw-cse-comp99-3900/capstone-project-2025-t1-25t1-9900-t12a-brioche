@@ -1,4 +1,4 @@
-from django.contrib.auth.models import AbstractUser, BaseUserManager, Group, Permission
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 
 class UserManager(BaseUserManager):
@@ -6,15 +6,19 @@ class UserManager(BaseUserManager):
         if not email:
             raise ValueError("Email is required")
         email = self.normalize_email(email)
-        user = self.model(email=email, **extra_fields)
+        user = self.model(email=email, username=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
 class User(AbstractUser):
     email = models.EmailField(unique=True)
+    username = models.CharField(max_length=255, unique=True, blank=True, null=True)
     group = models.CharField(max_length=255, blank=True, null=True)
-    reset_token = models.CharField(max_length=255, blank=True, null=True)
 
-    groups = models.ManyToManyField(Group, related_name="auth_api_users", blank=True)
-    user_permissions = models.ManyToManyField(Permission, related_name="auth_api_users_permissions", blank=True)
+    objects = UserManager()
+
+    def save(self, *args, **kwargs):
+        if not self.username:
+            self.username = self.email
+        super().save(*args, **kwargs)
