@@ -17,3 +17,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             username=validated_data['username'],
             group=validated_data.get('group')
         )
+
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField(write_only=True, min_length=8)
