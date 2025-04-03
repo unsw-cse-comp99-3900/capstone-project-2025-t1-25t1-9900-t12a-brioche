@@ -1,5 +1,6 @@
 /* Overall layout of the page */
 .user-profile-container {
+  width: 100vw; 
   min-height: 100vh;
   background-color: #f3f4f6;
   display: flex;
@@ -16,25 +17,28 @@
   font-weight: 500;
   color: white;
   border-bottom: 3px solid #ccc;
+  justify-content: space-evenly; 
 }
 
 /* Main content layout */
 .profile-content {
-    display: flex;
-    flex-direction: row;
-    gap: 2rem;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 2rem;
-  }
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; 
+  gap: 2rem;
+  padding: 2rem;
+  width: 100%;
+  box-sizing: border-box;
+}
 
 /* User card style */
 .user-card {
   flex: 1;
   background: #fff;
   border-radius: 1rem;
-  padding: 1.5rem 12rem;
+  padding: 1.5rem;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
 }
 
 /* Avatar area */
@@ -102,6 +106,78 @@
   margin-bottom: 0.5rem;
 }
 
+/* Group card container */
+.group-card {
+  flex: 1;
+  background: #ddd;
+  border-radius: 1rem;
+  padding: 5.5rem;
+  width: 100%;
+}
+  
+/* Group name title */
+.group-card h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.group-card h3 {
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+/* member list */
+.group-members {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Each member card */
+.group-member {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  gap: 1rem;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Member avatar */
+.member-avatar {
+  width: 40px;
+  height: 40px;
+  background: black;
+  border-radius: 50%;
+}
+
+/* Member information */
+.member-info p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #333;
+}
+
+/* Bottom button */
+.group-edit-button {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.group-edit-button button {
+  background: white;
+  padding: 0.5rem 1.25rem;
+  border-radius: 0.75rem;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+}
+  
+
 /* Logout button */
 .logout-container {
   position: absolute;
@@ -116,74 +192,3 @@
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
   cursor: pointer;
 }
-
-/* Group card container */
-.group-card {
-    flex: 1;
-    background: #ddd;
-    border-radius: 1rem;
-    padding: 5.5rem 12rem;
-  }
-  
-  /* Group name title */
-  .group-card h2 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: 0.25rem;
-  }
-  
-  .group-card h3 {
-    font-size: 1.25rem;
-    font-weight: 500;
-    margin-bottom: 1rem;
-  }
-  
-  /* member list */
-  .group-members {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  /* Each member card */
-  .group-member {
-    display: flex;
-    align-items: center;
-    background: white;
-    border-radius: 0.75rem;
-    padding: 0.75rem 1rem;
-    gap: 1rem;
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Member avatar */
-  .member-avatar {
-    width: 40px;
-    height: 40px;
-    background: black;
-    border-radius: 50%;
-  }
-  
-  /* Member information */
-  .member-info p {
-    margin: 0;
-    font-size: 0.85rem;
-    color: #333;
-  }
-  
-  /* Bottom button */
-  .group-edit-button {
-    margin-top: 2rem;
-    text-align: center;
-  }
-  
-  .group-edit-button button {
-    background: white;
-    padding: 0.5rem 1.25rem;
-    border-radius: 0.75rem;
-    border: none;
-    cursor: pointer;
-    font-weight: 500;
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
-  }
-  
