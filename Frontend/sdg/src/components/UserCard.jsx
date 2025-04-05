@@ -1,7 +1,7 @@
 import React from 'react';
 import './UserProfile.css';
 
-const UserCard = () => {
+const UserCard = ({ user }) => {
   return (
     <div className="user-card">
       <div className="avatar-section">
@@ -9,13 +9,13 @@ const UserCard = () => {
         <button className="edit-button">Edit</button>
       </div>
       <div className="user-info">
-        <h2>User Name</h2>
-        <p>Job title <span className="divider">|</span> Department</p>
+        <h2>{user.name}</h2>
+        <p>{user.title} <span className="divider">|</span> {user.department}</p>
       </div>
       <div className="contact-box">
         <p><strong>Contact information:</strong></p>
-        <p>Email address: xxx@xxx.com</p>
-        <p>Phone number: 12345667890</p>
+        <p>Email address: {user.email}</p>
+        <p>Phone number: {user.phone}</p>
       </div>
       <div className="sdg-section">
         <h3>SDG Action Plan</h3>

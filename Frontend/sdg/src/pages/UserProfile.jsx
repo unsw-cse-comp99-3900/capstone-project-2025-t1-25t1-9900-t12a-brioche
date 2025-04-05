@@ -4,7 +4,25 @@ import UserCard from '../components/UserCard';
 import GroupCard from '../components/GroupCard';
 import '../components/UserProfile.css';
 
+// src/pages/UserProfile.jsx
 const UserProfile = () => {
+
+  // Mock user data
+  const user = {
+    name: "Andrew Wenjun",
+    title: "Frontend Developer",
+    department: "Tech Team",
+    email: "andrew@example.com",
+    phone: "123-456-7890",
+  };
+
+  // Mock group data
+  const groupMembers = [
+    { name: "Alice Zhang", title: "Designer", dept: "UX Team" },
+    { name: "Bob Li", title: "Engineer", dept: "Frontend" },
+    { name: "Charlie Wang", title: "Manager", dept: "Product" }
+  ];
+
   return (
     <div className="user-profile-container">
       <nav className="navbar">
@@ -15,8 +33,8 @@ const UserProfile = () => {
       </nav>
 
       <div className="profile-content">
-        <UserCard />
-        <GroupCard />
+        <UserCard user={user} />
+        <GroupCard members={groupMembers} />
       </div>
 
       <div className="logout-container">
@@ -25,5 +43,6 @@ const UserProfile = () => {
     </div>
   );
 };
+
 
 export default UserProfile;

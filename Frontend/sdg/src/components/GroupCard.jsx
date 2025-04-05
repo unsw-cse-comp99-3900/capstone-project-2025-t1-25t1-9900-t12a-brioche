@@ -1,19 +1,19 @@
 // src/components/GroupCard.jsx
 import React from 'react';
 
-const GroupCard = () => {
+const GroupCard = ({ members }) => {
   return (
     <div className="group-card">
       <h2>Group</h2>
       <h3>Group name</h3>
       <p>Group members:</p>
       <div className="group-members">
-        {[1, 2, 3].map((_, i) => (
+        {members.map((member, i) => (
           <div className="group-member" key={i}>
             <div className="member-avatar"></div>
             <div className="member-info">
-              <p>Group member name</p>
-              <p>Job title / department</p>
+              <p>{member.name}</p>
+              <p>{member.title} / {member.dept}</p>
             </div>
           </div>
         ))}
@@ -26,3 +26,4 @@ const GroupCard = () => {
 };
 
 export default GroupCard;
+
