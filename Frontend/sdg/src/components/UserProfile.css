@@ -185,10 +185,34 @@
   right: 1rem;
 }
 
-.logout-button {
-  background-color: white;
-  padding: 0.4rem 0.75rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
+
+.nav-button {
+  padding: 8px 16px;
+  background-color: #3498db;
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
+  margin-right: 8px;
 }
+
+.nav-button:hover {
+  background-color: #2c80b4;
+}
+.logout-button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  height: fit-content;
+  display: inline-block;      /* ✅ 让它和 Link 一样大小行为 */
+  white-space: nowrap;        /* ✅ 防止按钮内容换行撑大 */
+}
+
+

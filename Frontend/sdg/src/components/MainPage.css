@@ -1,0 +1,131 @@
+.main-page-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f5f7fa;
+  }
+  
+  /* ✅ 顶部导航栏样式 */
+  .navbar {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 30px;
+    padding: 10px 20px;
+    background-color: #f2f2f2;
+    border-radius: 8px;
+  }
+  
+  /* ✅ Link 按钮样式 */
+  .nav-button {
+    padding: 8px 16px;
+    background-color: #3498db;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  .nav-button:hover {
+    background-color: #2c80b4;
+  }
+  
+  
+  .top-section {
+    margin-top: 80px;
+    margin-bottom: 40px;
+  }
+  
+  .logo-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 30px;
+  }
+  
+  .un-logo,
+  .sdg-logo {
+    height: 80px;
+    object-fit: contain;
+  }
+  
+  .search-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+  
+  .search-section h2 {
+    margin-bottom: 10px;
+    font-size: 24px;
+  }
+  
+  .search-box {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .search-box input {
+    padding: 10px;
+    width: 60%;
+    max-width: 500px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+  }
+  
+  .search-box button {
+    padding: 10px 16px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .sdg-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 20px;
+    justify-items: center;
+  }
+  
+  .sdg-link {
+    display: block;
+    transition: transform 0.2s ease;
+  }
+  
+  .sdg-link:hover {
+    transform: scale(1.05);
+  }
+  
+  .sdg-icon {
+    width: 100px;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+  }
+  /* 统一 Log out 按钮样式 */
+  .logout-button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    height: fit-content;
+    display: inline-block;      /* ✅ 让它和 Link 一样大小行为 */
+    white-space: nowrap;        /* ✅ 防止按钮内容换行撑大 */
+  }
+  
+  
+
+  
