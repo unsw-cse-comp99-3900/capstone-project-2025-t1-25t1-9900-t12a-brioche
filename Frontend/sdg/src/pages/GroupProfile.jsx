@@ -1,10 +1,17 @@
 import React from 'react';
 import GroupCard from '../components/GroupCard';
 import '../components/GroupProfile.css';
-import { Link } from 'react-router-dom'; // ✅ 加入跳转功能
+import { Link } from 'react-router-dom';
 
 
 const GroupProfile = () => {
+
+  const groupMembers = [
+    { name: "Alice Zhang", title: "Designer", dept: "UX Team" },
+    { name: "Bob Li", title: "Engineer", dept: "Frontend" },
+    { name: "Charlie Wang", title: "Manager", dept: "Product" }
+  ];
+  
   return (
     <div className="group-profile-container">
       <nav className="navbar">
@@ -16,10 +23,8 @@ const GroupProfile = () => {
       </nav>
 
       <div className="profile-content">
-        {/* 左边：复用 GroupCard 组件 */}
-        <GroupCard />
-
-        {/* 右边：你新增的邀请新成员表单 */}
+        
+        <GroupCard members={groupMembers} />
         <div className="invite-section">
           <h3>Invite New Members</h3>
           <label>Username</label>

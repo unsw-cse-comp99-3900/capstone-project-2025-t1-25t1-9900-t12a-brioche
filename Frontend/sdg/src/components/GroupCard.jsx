@@ -1,7 +1,7 @@
 // src/components/GroupCard.jsx
 import React from 'react';
 
-const GroupCard = ({ members }) => {
+const GroupCard = ({ members = [] }) => {
   return (
     <div className="group-card">
       <h2>Group</h2>

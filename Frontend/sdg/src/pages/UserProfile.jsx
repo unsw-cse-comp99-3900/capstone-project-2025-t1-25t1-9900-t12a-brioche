@@ -3,7 +3,7 @@ import React from 'react';
 import UserCard from '../components/UserCard';
 import GroupCard from '../components/GroupCard';
 import '../components/UserProfile.css';
-import { Link } from 'react-router-dom'; // ✅ 加入跳转功能
+import { Link } from 'react-router-dom';
 
 
 // src/pages/UserProfile.jsx
