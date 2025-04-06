@@ -12,6 +12,8 @@ function App() {
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/group" element={<GroupProfile />} /> 
+        <Route path="/action" element={<CreateActionPlan />} /> 
       </Routes>
     </Router>
   );

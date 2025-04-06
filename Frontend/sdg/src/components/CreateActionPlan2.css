@@ -1,0 +1,109 @@
+ /* CreateActionPlan.css */
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+  }
+  
+  /* 整个页面容器 */
+  .cap-form-container {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+    padding: 20px 0;
+    box-sizing: border-box;
+  }
+  
+  /* 顶部导航栏 */
+  .navbar {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 30px;
+    padding: 10px 20px;
+    background-color: #f2f2f2;
+    border-radius: 8px;
+  }
+  
+  .cap-nav-button {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  
+  .logout-button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: auto;
+  }
+  
+  /* 表单卡片盒子 */
+  .cap-form-box {
+    width: 100%;
+    background-color: #d3ecff;
+    padding: 40px 60px;
+    margin-top: 30px;
+    box-sizing: border-box;
+  }
+  
+  /* 表单内容布局 */
+  .cap-form-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .cap-form-content label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .cap-form-content input,
+  .cap-form-content textarea,
+  .cap-form-content select {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 15px;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: white;
+  }
+  
+  /* 限制文本框行数并允许缩放 */
+  .cap-form-content textarea {
+    resize: vertical;
+    min-height: 100px;
+    max-height: 300px;
+  }
+  
+  /* 按钮容器 */
+  .cap-button-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+  }
+  
+ /* Next 按钮 */
+.cap-button-wrapper button {
+    padding: 12px 40px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+    width: fit-content;
+  }
+  
+  .cap-button-wrapper button:hover {
+    background-color: #005bbf;
+  }

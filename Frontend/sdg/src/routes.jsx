@@ -5,7 +5,8 @@ import ResetPassword from "./pages/ResetPassword";
 import UserProfile from "./pages/UserProfile";
 import GroupProfile from "./pages/GroupProfile";  // 👈 新增
 import MainPage from "./pages/MainPage";  // ✅ 新增
-
+import CreateActionPlan from './pages/CreateActionPlan';
+import CreateActionPlan2 from './pages/CreateActionPlan2';
 
 function AppRoutes() {
   return (
@@ -18,6 +19,8 @@ function AppRoutes() {
       <Route path="/profile" element={<UserProfile />} />
       <Route path="/group" element={<GroupProfile />} />  // 👈 新增
       <Route path="/main" element={<MainPage />} />
+      <Route path="/action" element={<CreateActionPlan />} /> 
+      <Route path="/action/step2" element={<CreateActionPlan2 />} />
     </Routes>
   );
 }
