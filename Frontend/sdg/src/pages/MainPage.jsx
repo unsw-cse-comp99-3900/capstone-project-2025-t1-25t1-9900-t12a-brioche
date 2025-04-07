@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom'; // ✅ 用于跳转
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../components/MainPage.css';
 
 const sdgGoals = Array.from({ length: 17 }, (_, i) => ({
@@ -8,6 +8,14 @@ const sdgGoals = Array.from({ length: 17 }, (_, i) => ({
 }));
 
 const MainPage = () => {
+  const [keyword, setKeyword] = useState('');
+
+  const handleSearch = () => {
+    if (!keyword.trim()) return;
+    const searchUrl = `https://sdg.unswzoo.com/search/?mode=contains&keyword=${encodeURIComponent(keyword)}`;
+    window.open(searchUrl, '_blank'); // 新标签打开
+  };
+
   return (
     <div className="main-page-container">
       {/* ✅ 顶部导航栏 */}
@@ -19,18 +27,24 @@ const MainPage = () => {
         <button className="logout-button">Log out</button>
       </nav>
 
-      {/* ✅ 顶部 logo 和搜索区域 */}
+      {/* ✅ LOGO 区域 */}
       <div className="top-section">
         <div className="logo-section">
-          <img src="/sdg_images/un_logo.png" alt="United Nations Logo" className="un-logo" />
-          <img src="/sdg_images/sdg_wheel.png" alt="SDG Color Wheel" className="sdg-logo" />
+          <img src="/sdg_images/un_logo.png" alt="UN Logo" className="un-logo" />
+          <img src="/sdg_images/sdg_wheel.png" alt="SDG Wheel" className="sdg-logo" />
         </div>
 
+        {/* ✅ 搜索区域 */}
         <div className="search-section">
           <h2>Keyword search</h2>
           <div className="search-box">
-            <input type="text" placeholder="Enter keyword" />
-            <button>Search</button>
+            <input
+              type="text"
+              placeholder="Enter keyword"
+              value={keyword}
+              onChange={(e) => setKeyword(e.target.value)}
+            />
+            <button onClick={handleSearch}>Search</button>
           </div>
         </div>
       </div>
