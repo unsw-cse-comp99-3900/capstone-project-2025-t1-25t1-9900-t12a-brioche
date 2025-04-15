@@ -1,6 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; // ✅ 用于跳转
-import '../components/MainPage.css';
+import { Link } from 'react-router-dom';
+import '../components/Style/MainPage.css';
+import Navbar from '../components/Navbar';
 
 const sdgGoals = Array.from({ length: 17 }, (_, i) => ({
   id: i + 1,
@@ -10,16 +11,7 @@ const sdgGoals = Array.from({ length: 17 }, (_, i) => ({
 const MainPage = () => {
   return (
     <div className="main-page-container">
-      {/* ✅ 顶部导航栏 */}
-      <nav className="navbar">
-        <Link to="/main" className="nav-button">Main Page</Link>
-        <Link to="/profile" className="nav-button">User Profile</Link>
-        <Link to="/group" className="nav-button">Group Profile</Link>
-        <Link to="/action" className="nav-button">Create Action Plan</Link>
-        <button className="logout-button">Log out</button>
-      </nav>
-
-      {/* ✅ 顶部 logo 和搜索区域 */}
+      <Navbar />
       <div className="top-section">
         <div className="logo-section">
           <img src="/sdg_images/un_logo.png" alt="United Nations Logo" className="un-logo" />
@@ -35,7 +27,6 @@ const MainPage = () => {
         </div>
       </div>
 
-      {/* ✅ SDG 图标区域 */}
       <div className="sdg-grid">
         {sdgGoals.map((goal) => (
           <a

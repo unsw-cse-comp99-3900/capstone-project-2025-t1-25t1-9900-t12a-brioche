@@ -1,8 +1,8 @@
 import React from 'react';
 import GroupCard from '../components/GroupCard';
-import '../components/GroupProfile.css';
+import Navbar from '../components/Navbar';
+import '../components/Style/GroupProfile.css';
 import { Link } from 'react-router-dom';
-
 
 const GroupProfile = () => {
 
@@ -14,13 +14,7 @@ const GroupProfile = () => {
   
   return (
     <div className="group-profile-container">
-      <nav className="navbar">
-        <Link to="/main" className="nav-button">Main Page</Link>
-        <Link to="/profile" className="nav-button">User Profile</Link>
-        <Link to="/group" className="nav-button">Group Profile</Link>
-        <Link to="/action" className="nav-button">Create Action Plan</Link>
-        <button className="logout-button">Log out</button>
-      </nav>
+      <Navbar />
 
       <div className="profile-content">
         
@@ -34,10 +28,6 @@ const GroupProfile = () => {
           <input type="email" placeholder="Enter email" />
           <button>Invite</button>
         </div>
-      </div>
-
-      <div className="logout-container">
-        <button className="logout-button">Log out</button>
       </div>
     </div>
   );

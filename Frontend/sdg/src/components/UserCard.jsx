@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import './UserProfile.css';
+import './Style/UserProfile.css';
+
 
 const UserCard = ({ user }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -21,7 +22,7 @@ const UserCard = ({ user }) => {
 
       if (!response.ok) throw new Error("Update failed");
 
-      setIsEditing(false); // 保存成功退出编辑
+      setIsEditing(false);
     } catch (err) {
       console.error("Update error:", err);
     }
