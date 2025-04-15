@@ -1,0 +1,31 @@
+/* Enhanced top navigation bar */ 
+  .navbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #007acc;
+    padding: 1rem 2rem;
+    border-bottom: 3px solid #005b99;
+    height: 70px;
+    gap: 1.5rem;
+  }
+  
+/* Navigation button styling */
+  .nav-button {
+    background-color: #ffffff;
+    color: #007acc;
+    padding: 14px 24px;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    transition: 0.2s ease-in-out;
+  }
+  
+  .nav-button:hover {
+    background-color: #005b99;
+    color: #ffffff;
+  }
+  

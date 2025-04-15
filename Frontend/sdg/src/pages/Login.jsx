@@ -19,6 +19,14 @@ const Login = () => {
 
   return (
     <AuthLayout>
+       <div className="min-h-screen bg-gray-100">
+        <nav className="bg-cyan-600 text-white px-6 py-2 flex gap-6">
+          <Link to="/" className="hover:underline">Main Page</Link>
+          <Link to="/profile" className="hover:underline">User Profile</Link>
+          <Link to="/group" className="hover:underline">Group Profile</Link>
+          <Link to="/plan" className="hover:underline">Create Action Plan</Link>
+        </nav>
+      </div>
       <h2 className="text-2xl font-bold mb-4">Login</h2>
       <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
         {({ errors, touched }) => (

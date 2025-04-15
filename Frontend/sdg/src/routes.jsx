@@ -2,6 +2,10 @@ import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ResetPassword from "./pages/ResetPassword";
+import UserProfile from "./pages/UserProfile";
+import GroupProfile from "./pages/GroupProfile";  // 👈 新增
+import MainPage from "./pages/MainPage";  // ✅ 新增
+
 
 function AppRoutes() {
   return (
@@ -11,6 +15,9 @@ function AppRoutes() {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/reset-password" element={<ResetPassword />} />
+      <Route path="/profile" element={<UserProfile />} />
+      <Route path="/group" element={<GroupProfile />} />  // 👈 新增
+      <Route path="/main" element={<MainPage />} />
     </Routes>
   );
 }
