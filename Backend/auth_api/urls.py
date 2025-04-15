@@ -1,10 +1,21 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from .views import AuthViewSet
+"""
+URL configuration for djangoProject project.
 
-router = DefaultRouter()
-router.register(r"auth", AuthViewSet, basename="auth")
+This file routes top-level URLs to app-specific URLs.
+For more information, see:
+https://docs.djangoproject.com/en/5.1/topics/http/urls/
+
+Edited by Yueyao on April 15, 2025
+"""
+
+from django.contrib import admin
+from django.urls import path, include
 
 urlpatterns = [
-    path("", include(router.urls)),
+    # Admin panel (not actively used yet)
+    path('admin/', admin.site.urls),
+
+    # Auth-related API endpoints - registered by Yueyao
+    path('api/', include('auth_api.urls')),
 ]
+
