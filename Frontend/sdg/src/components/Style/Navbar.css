@@ -1,11 +1,19 @@
+<<<<<<< HEAD
 /* Enhanced top navigation bar */ 
   .navbar {
     display: flex;
     justify-content: center;
+=======
+/* Enhanced top navigation bar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+>>>>>>> userProfile-wenjun
     align-items: center;
     background-color: #007acc;
     padding: 1rem 2rem;
     border-bottom: 3px solid #005b99;
+<<<<<<< HEAD
     height: 70px;
     gap: 1.5rem;
   }
@@ -22,10 +30,38 @@
     text-decoration: none;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
     transition: 0.2s ease-in-out;
+=======
+  }
+  
+  /* Navigation button styling */
+  .nav-button {
+    background-color: #ffffff;
+    color: #007acc;
+    padding: 12px 20px;
+    margin: 0 8px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+>>>>>>> userProfile-wenjun
   }
   
   .nav-button:hover {
     background-color: #005b99;
+<<<<<<< HEAD
     color: #ffffff;
+=======
+    color: white;
+  }
+  
+  /* Make nav-bar sticky */
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+>>>>>>> userProfile-wenjun
   }
   

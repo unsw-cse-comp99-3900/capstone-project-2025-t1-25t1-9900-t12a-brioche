@@ -109,4 +109,23 @@ body {
     background-color: black;
     color: white;
   }
+<<<<<<< HEAD
+=======
+
+  button.google {
+    background-color: #db4437;
+    color: white;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100%;
+  }
+  button.google:hover {
+    background-color: #c1351d;
+  }
+  
+>>>>>>> userProfile-wenjun
   
