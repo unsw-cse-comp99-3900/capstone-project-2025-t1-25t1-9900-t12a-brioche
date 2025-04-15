@@ -6,10 +6,9 @@
     background-color: #f5f7fa;
   }
   
-<<<<<<< HEAD
-  /* ✅ 顶部导航栏样式 */
-=======
->>>>>>> userProfile-wenjun
+
+
+
   .navbar {
     display: flex;
     gap: 12px;
@@ -19,10 +18,7 @@
     border-radius: 8px;
   }
   
-<<<<<<< HEAD
-  /* ✅ Link 按钮样式 */
-=======
->>>>>>> userProfile-wenjun
+
   .nav-button {
     padding: 8px 16px;
     background-color: #3498db;
@@ -116,10 +112,7 @@
     object-fit: contain;
     border-radius: 8px;
   }
-<<<<<<< HEAD
-  /* 统一 Log out 按钮样式 */
-=======
->>>>>>> userProfile-wenjun
+
   .logout-button {
     background-color: #e74c3c;
     color: white;
@@ -131,13 +124,10 @@
     cursor: pointer;
     text-align: center;
     height: fit-content;
-<<<<<<< HEAD
-    display: inline-block;      /* ✅ 让它和 Link 一样大小行为 */
-    white-space: nowrap;        /* ✅ 防止按钮内容换行撑大 */
-=======
+
     display: inline-block;
     white-space: nowrap;
->>>>>>> userProfile-wenjun
+
   }
   
   
