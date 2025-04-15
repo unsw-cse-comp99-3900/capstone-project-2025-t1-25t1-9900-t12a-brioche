@@ -208,8 +208,8 @@
   cursor: pointer;
   text-align: center;
   height: fit-content;
-  display: inline-block;      /* ✅ 让它和 Link 一样大小行为 */
-  white-space: nowrap;        /* ✅ 防止按钮内容换行撑大 */
+  display: inline-block;     
+  white-space: nowrap;        
 }
 
 

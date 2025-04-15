@@ -13,12 +13,12 @@ const MainPage = () => {
   const handleSearch = () => {
     if (!keyword.trim()) return;
     const searchUrl = `https://sdg.unswzoo.com/search/?mode=contains&keyword=${encodeURIComponent(keyword)}`;
-    window.open(searchUrl, '_blank'); // 新标签打开
+    window.open(searchUrl, '_blank'); 
   };
 
   return (
     <div className="main-page-container">
-      {/* ✅ 顶部导航栏 */}
+      
       <nav className="navbar">
         <Link to="/main" className="nav-button">Main Page</Link>
         <Link to="/profile" className="nav-button">User Profile</Link>
@@ -27,14 +27,14 @@ const MainPage = () => {
         <button className="logout-button">Log out</button>
       </nav>
 
-      {/* ✅ LOGO 区域 */}
+     
       <div className="top-section">
         <div className="logo-section">
           <img src="/sdg_images/un_logo.png" alt="UN Logo" className="un-logo" />
           <img src="/sdg_images/sdg_wheel.png" alt="SDG Wheel" className="sdg-logo" />
         </div>
 
-        {/* ✅ 搜索区域 */}
+        
         <div className="search-section">
           <h2>Keyword search</h2>
           <div className="search-box">
@@ -49,7 +49,7 @@ const MainPage = () => {
         </div>
       </div>
 
-      {/* ✅ SDG 图标区域 */}
+      
       <div className="sdg-grid">
         {sdgGoals.map((goal) => (
           <a

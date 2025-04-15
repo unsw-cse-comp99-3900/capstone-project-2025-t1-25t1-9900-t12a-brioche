@@ -13,7 +13,7 @@ const mockContent = {
 };
 
 const ContentDetail = () => {
-  const { id } = useParams(); // 如果以后你传动态id用得到
+  const { id } = useParams(); 
   const navigate = useNavigate();
 
   const handleBack = () => {
@@ -22,7 +22,7 @@ const ContentDetail = () => {
 
   return (
     <div className="content-detail-container">
-      {/* ✅ 顶部导航栏 */}
+      
       <nav className="navbar">
         <Link to="/main" className="nav-button">Main Page</Link>
         <Link to="/profile" className="nav-button">User Profile</Link>
@@ -31,10 +31,10 @@ const ContentDetail = () => {
         <button className="logout-button">Log out</button>
       </nav>
 
-      {/* ✅ 返回按钮 */}
+      
       <button onClick={handleBack} className="back-button">Back</button>
 
-      {/* ✅ 内容标题和正文 */}
+      
       <div className="content-box">
         <h2 className="content-title">{mockContent.title}</h2>
         <p className="content-description">{mockContent.description}</p>

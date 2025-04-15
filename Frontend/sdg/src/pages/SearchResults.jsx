@@ -29,13 +29,13 @@ const SearchResults = () => {
   const navigate = useNavigate();
 
   const handleCardClick = (id) => {
-    // 将来可以传更多数据
+   
     navigate(`/content/${id}`);
   };
 
   return (
     <div className="search-results-container">
-      {/* 顶部导航栏 */}
+      
       <nav className="navbar">
         <Link to="/main" className="nav-button">Main Page</Link>
         <Link to="/profile" className="nav-button">User Profile</Link>
