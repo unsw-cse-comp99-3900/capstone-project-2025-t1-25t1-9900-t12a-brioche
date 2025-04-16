@@ -17,17 +17,28 @@ class AuthViewSet(viewsets.ViewSet):
     def register(self, request):
         email = request.data.get("email")
         password = request.data.get("password")
+        name = request.data.get("name")  # New
+        title = request.data.get("title")  # New
+        phone = request.data.get("phone")  # New
+
         if not email or not password:
-            return Response({"error": "Email and password are required"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "Email and password are required"}, status=400)
+
         if User.objects.filter(email=email).exists():
-            return Response({"error": "User with this email already exists"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "User already exists"}, status=400)
+
         user = User.objects.create_user(email=email, password=password)
+        user.name = name
+        user.title = title
+        user.phone = phone
+        user.save()
+
         refresh = RefreshToken.for_user(user)
         return Response({
             "message": "Registration successful",
             "access": str(refresh.access_token),
             "refresh": str(refresh)
-        }, status=status.HTTP_201_CREATED)
+        }, status=201)
 
     @action(detail=False, methods=["post"])
     def login(self, request):
