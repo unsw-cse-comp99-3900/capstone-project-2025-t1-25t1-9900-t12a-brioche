@@ -1,8 +1,8 @@
 from django.contrib.auth import get_user_model, authenticate
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from rest_framework.decorators import action
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import action, api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import RegisterSerializer, LoginSerializer, GroupSerializer, UserSerializer
 from .models import Group
@@ -17,9 +17,9 @@ class AuthViewSet(viewsets.ViewSet):
     def register(self, request):
         email = request.data.get("email")
         password = request.data.get("password")
-        name = request.data.get("name")  # New
-        title = request.data.get("title")  # New
-        phone = request.data.get("phone")  # New
+        name = request.data.get("name")   # New
+        title = request.data.get("title") # New
+        phone = request.data.get("phone") # New
 
         if not email or not password:
             return Response({"error": "Email and password are required"}, status=400)
@@ -91,3 +91,21 @@ class GroupViewSet(viewsets.ModelViewSet):
         group.members.remove(user)
         return Response({"message": "Member removed successfully."})
 
+
+# New Reset password
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def reset_password(request):
+    email = request.data.get("email")
+    new_password = request.data.get("new_password")
+
+    if not email or not new_password:
+        return Response({"error": "Email and new password required."}, status=400)
+
+    try:
+        user = User.objects.get(email=email)
+        user.set_password(new_password)
+        user.save()
+        return Response({"message": "Password reset successfully."}, status=200)
+    except User.DoesNotExist:
+        return Response({"error": "User not found."}, status=404)
