@@ -59,7 +59,7 @@ class AuthViewSet(viewsets.ViewSet):
         return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
 
     # New
-    @action(detail=False, methods=["patch"])
+    @action(detail=False, methods=["patch"], url_path="update-profile")  # New
     def update_profile(self, request):
         email = request.data.get("email")
         if not email:
