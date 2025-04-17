@@ -58,6 +58,27 @@ class AuthViewSet(viewsets.ViewSet):
             }, status=status.HTTP_200_OK)
         return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
 
+    # New
+    @action(detail=False, methods=["patch"])
+    def update_profile(self, request):
+        email = request.data.get("email")
+        if not email:
+            return Response({"error": "Email is required"}, status=400)
+
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            return Response({"error": "User not found"}, status=404)
+
+        # New
+        user.name = request.data.get("name", user.name)
+        user.title = request.data.get("title", user.title)
+        user.phone = request.data.get("phone", user.phone)
+        user.group = request.data.get("department", user.group)
+        user.save()
+
+        return Response({"message": "Profile updated successfully."}, status=200)
+
 class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
@@ -92,7 +113,7 @@ class GroupViewSet(viewsets.ModelViewSet):
         return Response({"message": "Member removed successfully."})
 
 
-# New Reset password
+# New reset password
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def reset_password(request):
