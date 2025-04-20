@@ -5,13 +5,9 @@ import * as Yup from "yup";
 import axios from "axios";
 import AuthLayout from "../components/AuthLayout";
 import Button from "../components/Button";
-<<<<<<< HEAD
-// test
-=======
 import { auth, provider } from "../firebase";
 import { signInWithPopup } from "firebase/auth";
 
->>>>>>> 5ad673ee269d7636dcbc5009bfa4b168d4521e22
 const Login = () => {
   const navigate = useNavigate();
 
