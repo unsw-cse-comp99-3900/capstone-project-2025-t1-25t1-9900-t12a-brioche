@@ -27,6 +27,7 @@ const UserProfile = () => {
 
     fetchUserData();
   }, []);
+  
 
 
   // Mock user data

@@ -7,6 +7,7 @@ import GroupProfile from "./pages/GroupProfile";
 import MainPage from "./pages/MainPage";  
 import SearchResults from './pages/SearchResults';
 import ContentDetail from './pages/ContentDetail';
+import CreateActionPlan from "./pages/CreateActionPlan";
 
 
 
@@ -24,6 +25,7 @@ function AppRoutes() {
       <Route path="/main" element={<MainPage />} />
       <Route path="/search" element={<SearchResults />} />
       <Route path="/content/:id" element={<ContentDetail />} />
+      <Route path="/action-plan" element={<CreateActionPlan />} />
     </Routes>
   );
 }
