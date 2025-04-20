@@ -22,7 +22,6 @@ const ContentDetail = () => {
 
   return (
     <div className="content-detail-container">
-      
       <nav className="navbar">
         <Link to="/main" className="nav-button">Main Page</Link>
         <Link to="/profile" className="nav-button">User Profile</Link>
@@ -30,19 +29,13 @@ const ContentDetail = () => {
         <Link to="/action" className="nav-button">Create Action Plan</Link>
         <button className="logout-button">Log out</button>
       </nav>
-
-      
       <button onClick={handleBack} className="back-button">Back</button>
-
-      
       <div className="content-box">
         <h2 className="content-title">{mockContent.title}</h2>
         <p className="content-description">{mockContent.description}</p>
-
         <div className="content-section">
           <p>{mockContent.fullText1}</p>
         </div>
-
         <div className="content-section">
           <p>{mockContent.fullText2}</p>
         </div>

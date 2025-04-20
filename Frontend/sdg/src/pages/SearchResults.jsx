@@ -29,13 +29,11 @@ const SearchResults = () => {
   const navigate = useNavigate();
 
   const handleCardClick = (id) => {
-   
     navigate(`/content/${id}`);
   };
 
   return (
     <div className="search-results-container">
-      
       <nav className="navbar">
         <Link to="/main" className="nav-button">Main Page</Link>
         <Link to="/profile" className="nav-button">User Profile</Link>

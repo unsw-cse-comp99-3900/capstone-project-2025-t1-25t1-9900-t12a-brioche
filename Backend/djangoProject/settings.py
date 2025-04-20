@@ -54,7 +54,7 @@ WSGI_APPLICATION = 'djangoProject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'sdg_local',
+        'NAME': 'brioche',
         'USER': 'root',
         'PASSWORD': 'Andrew123*',
         'HOST': '127.0.0.1',
