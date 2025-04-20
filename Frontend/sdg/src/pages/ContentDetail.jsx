@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import '../components/ContentDetail.css';
+import '../components/Style/ContentDetail.css';
 
 const mockContent = {
   id: 1,

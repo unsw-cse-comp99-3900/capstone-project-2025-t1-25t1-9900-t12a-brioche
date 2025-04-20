@@ -29,27 +29,29 @@ const Register = () => {
   };
 
   return (
-    <AuthLayout>
-      <h2 className="text-2xl font-bold mb-4">Register</h2>
-      <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
-        {({ errors, touched, isSubmitting }) => (
-          <Form>
-            <div className="mb-4">
-              <Field name="email" placeholder="Email" className="w-full p-2 border rounded" />
-              {errors.email && touched.email && <p className="text-red-500 text-sm">{errors.email}</p>}
-            </div>
-            <div className="mb-4">
-              <Field name="password" type="password" placeholder="Password" className="w-full p-2 border rounded" />
-              {errors.password && touched.password && <p className="text-red-500 text-sm">{errors.password}</p>}
-            </div>
-            <Button text={isSubmitting ? "Registering..." : "Register"} type="submit" />
-            <div className="text-center mt-4">
-              <Link to="/login" className="text-blue-500 text-sm">Had account? Login</Link>
-            </div>
-          </Form>
-        )}
-      </Formik>
-    </AuthLayout>
+    <div className="auth-page-container">
+      <div className="auth-page-box">
+        <h2 className="auth-page-title">Register</h2>
+        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+          {({ errors, touched, isSubmitting }) => (
+            <Form>
+              <div className="input-group">
+                <Field name="email" placeholder="Email" className="input-field" />
+                {errors.email && touched.email && <p className="error-text">{errors.email}</p>}
+              </div>
+              <div className="input-group">
+                <Field name="password" type="password" placeholder="Password" className="input-field" />
+                {errors.password && touched.password && <p className="error-text">{errors.password}</p>}
+              </div>
+              <Button text={isSubmitting ? "Registering..." : "Register"} type="submit" />
+              <div className="text-center mt-4">
+                <Link to="/login" className="text-blue-500 text-sm">Had account? Login</Link>
+              </div>
+            </Form>
+          )}
+        </Formik>
+      </div>
+    </div>
   );
 };
 

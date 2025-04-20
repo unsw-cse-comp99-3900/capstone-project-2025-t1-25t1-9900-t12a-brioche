@@ -2,16 +2,16 @@
 .user-profile-container {
   background-color: #dcdcdc;
   min-height: 100vh;
-  padding: 40px;
+  width: 100vw;
 }
 
 .profile-main-wrapper {
   background-color: white;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  max-width: 1200px;
+  max-width: 90%;
+  min-height: 100vh;
   margin: 0 auto;
-  overflow: hidden;
 }
 
 .top-banner {
@@ -22,21 +22,35 @@
 
 .profile-content {
   display: flex;
+  flex-wrap: wrap;
   padding: 40px;
-  justify-content: space-between;
+  justify-content: center;
   gap: 40px;
 }
 
+/* User card style */
+.user-card, .group-card {
+  flex: 1 1 380px;
+  max-width: 380px;
+  min-width: 300px;
+  min-height: 50vh;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
 
 /* User card style */
 .user-card {
-  flex: 1;
-  background: white;
+  background: rgb(217, 236, 255);
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   overflow: hidden;
   position: relative;
-  padding: 2rem;
+  padding: 5.5rem;
+}
+
+.group-card {
+  background: #ddd;
+  padding: 5.5rem;
 }
 
 /* Avatar area */
@@ -102,15 +116,6 @@
   background-color: #ddd;
   border-radius: 0.25rem;
   margin-bottom: 0.5rem;
-}
-
-/* Group card container */
-.group-card {
-  flex: 1;
-  background: #ddd;
-  border-radius: 1rem;
-  padding: 5.5rem;
-  width: 100%;
 }
   
 /* Group name title */

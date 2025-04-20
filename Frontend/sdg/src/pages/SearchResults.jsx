@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../components/SearchResults.css';
+import '../components/Style/SearchResults.css';
 import { Link } from 'react-router-dom';
 
 
