@@ -4,59 +4,38 @@ from rest_framework.response import Response
 from rest_framework.decorators import action, api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
-from .serializers import RegisterSerializer, LoginSerializer, GroupSerializer, UserSerializer
-from .models import Group
+from google.oauth2 import id_token
+from google.auth.transport import requests as google_requests
+from .serializers import RegisterSerializer, LoginSerializer, GroupSerializer, UserSerializer, ActionPlanSerializer
+from .models import Group, ActionPlan
 
-import logging
-
-logger = logging.getLogger(__name__)
 User = get_user_model()
 
-
 class AuthViewSet(viewsets.ViewSet):
-
     def list(self, request):
         return Response({"message": "Auth API is working!"}, status=200)
 
     @action(detail=False, methods=["post"])
     def register(self, request):
-        logger.info("Yueyao reached the register API")
-
-        email = request.data.get("email")
-        password = request.data.get("password")
-
-        if not email or not password:
-            return Response({"error": "Email and password are required"}, status=400)
-
-        if User.objects.filter(email=email).exists():
-            return Response({"error": "User already exists"}, status=400)
-
-        user = User.objects.create_user(email=email, password=password)
-        user.save()
-
-        refresh = RefreshToken.for_user(user)
-
-        return Response({
-            "message": "Registration successful",
-            "access": str(refresh.access_token),
-            "refresh": str(refresh)
-        }, status=201)
+        serializer = RegisterSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save()
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                "message": "Registration successful",
+                "access": str(refresh.access_token),
+                "refresh": str(refresh)
+            }, status=201)
+        return Response(serializer.errors, status=400)
 
     @action(detail=False, methods=["post"])
     def login(self, request):
-        logger.info("Yueyao reached the login API")
-
         email = request.data.get("email")
         password = request.data.get("password")
-
         try:
             user = User.objects.get(email=email)
         except User.DoesNotExist:
-            return Response(
-                {"error": "Invalid credentials"},
-                status=status.HTTP_401_UNAUTHORIZED
-            )
-
+            return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
         user = authenticate(username=user.email, password=password)
         if user:
             refresh = RefreshToken.for_user(user)
@@ -66,6 +45,33 @@ class AuthViewSet(viewsets.ViewSet):
                 "refresh": str(refresh)
             }, status=status.HTTP_200_OK)
         return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
+
+    @action(detail=False, methods=["post"], url_path="google-login", permission_classes=[AllowAny])
+    def google_login(self, request):
+        token = request.data.get("token")
+        if not token:
+            return Response({"error": "No token provided"}, status=400)
+
+        try:
+            idinfo = id_token.verify_oauth2_token(token, google_requests.Request())
+            email = idinfo.get("email")
+            if not email:
+                return Response({"error": "Invalid token, email not found"}, status=400)
+
+            user, created = User.objects.get_or_create(email=email)
+            if created:
+                user.set_unusable_password()
+                user.save()
+
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                "message": "Google login successful",
+                "access": str(refresh.access_token),
+                "refresh": str(refresh)
+            })
+
+        except Exception as e:
+            return Response({"error": f"Token verification failed: {str(e)}"}, status=400)
 
     @action(detail=False, methods=["patch"], url_path="update-profile", permission_classes=[IsAuthenticated])
     def update_profile(self, request):
@@ -140,3 +146,14 @@ def reset_password(request):
         return Response({"message": "Password reset successfully."}, status=200)
     except User.DoesNotExist:
         return Response({"error": "User not found."}, status=404)
+
+class ActionPlanViewSet(viewsets.ModelViewSet):
+    queryset = ActionPlan.objects.all()
+    serializer_class = ActionPlanSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+    def get_queryset(self):
+        return self.queryset.filter(user=self.request.user)
