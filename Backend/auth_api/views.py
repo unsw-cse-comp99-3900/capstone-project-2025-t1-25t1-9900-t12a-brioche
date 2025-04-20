@@ -17,9 +17,6 @@ class AuthViewSet(viewsets.ViewSet):
     def register(self, request):
         email = request.data.get("email")
         password = request.data.get("password")
-        name = request.data.get("name")   # New
-        title = request.data.get("title") # New
-        phone = request.data.get("phone") # New
 
         if not email or not password:
             return Response({"error": "Email and password are required"}, status=400)
@@ -28,9 +25,6 @@ class AuthViewSet(viewsets.ViewSet):
             return Response({"error": "User already exists"}, status=400)
 
         user = User.objects.create_user(email=email, password=password)
-        user.name = name
-        user.title = title
-        user.phone = phone
         user.save()
 
         refresh = RefreshToken.for_user(user)
@@ -58,26 +52,29 @@ class AuthViewSet(viewsets.ViewSet):
             }, status=status.HTTP_200_OK)
         return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
 
-    # New
-    @action(detail=False, methods=["patch"], url_path="update-profile")  # New
+    @action(detail=False, methods=["patch"], url_path="update-profile", permission_classes=[IsAuthenticated])
     def update_profile(self, request):
-        email = request.data.get("email")
-        if not email:
-            return Response({"error": "Email is required"}, status=400)
-
-        try:
-            user = User.objects.get(email=email)
-        except User.DoesNotExist:
-            return Response({"error": "User not found"}, status=404)
-
-        # New
+        user = request.user
         user.name = request.data.get("name", user.name)
         user.title = request.data.get("title", user.title)
         user.phone = request.data.get("phone", user.phone)
         user.group = request.data.get("department", user.group)
         user.save()
-
         return Response({"message": "Profile updated successfully."}, status=200)
+
+    @action(detail=False, methods=["get"], url_path="profile", permission_classes=[IsAuthenticated])
+    def get_profile(self, request):
+        user = request.user
+        if not user or user.is_anonymous:
+            return Response({"error": "Unauthenticated"}, status=401)
+
+        return Response({
+            "email": user.email,
+            "name": user.name,
+            "title": user.title,
+            "phone": user.phone,
+            "group": user.group,
+        })
 
 class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all()
@@ -112,8 +109,6 @@ class GroupViewSet(viewsets.ModelViewSet):
         group.members.remove(user)
         return Response({"message": "Member removed successfully."})
 
-
-# New reset password
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def reset_password(request):
