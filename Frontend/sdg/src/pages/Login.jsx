@@ -84,7 +84,7 @@ const Login = () => {
           <div className="mt-4 text-center">
             <p className="text-green-600 font-semibold">Welcome, {user.displayName}</p>
             <p className="text-sm text-gray-700">{user.email}</p>
-            <img src={user.photoURL} alt="avatar" className="mx-auto mt-2 rounded-full w-12 h-12" />
+            <img src={user.photoURL || "https://www.gravatar.com/avatar?d=mp&s=100"} alt="avatar" className="mx-auto mt-2 rounded-full w-12 h-12" />
           </div>
         )}
       </div>
