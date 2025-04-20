@@ -32,7 +32,9 @@ const Login = () => {
 
   return (
     <AuthLayout>
+
       <div className="min-h-screen bg-gray-100">
+
         <nav className="bg-cyan-600 text-white px-6 py-2 flex gap-6">
           <Link to="/" className="hover:underline">Main Page</Link>
           <Link to="/profile" className="hover:underline">User Profile</Link>
@@ -40,6 +42,8 @@ const Login = () => {
           <Link to="/plan" className="hover:underline">Create Action Plan</Link>
         </nav>
       </div>
+
+
 
       <h2 className="text-2xl font-bold mb-4">Login</h2>
 

@@ -1,4 +1,6 @@
+
 import React, { useState } from 'react';
+
 import { Link } from 'react-router-dom';
 import '../components/Style/MainPage.css';
 import Navbar from '../components/Navbar';
@@ -10,6 +12,7 @@ const sdgGoals = Array.from({ length: 17 }, (_, i) => ({
 }));
 
 const MainPage = () => {
+
   const [keyword, setKeyword] = useState('');
 
   const handleSearch = () => {
@@ -42,6 +45,7 @@ const MainPage = () => {
           </div>
         </div>
       </div>
+
       <div className="sdg-grid">
         {sdgGoals.map((goal) => (
           <a
