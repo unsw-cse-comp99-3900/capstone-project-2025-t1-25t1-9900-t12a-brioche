@@ -127,4 +127,52 @@ body {
   }
   
 
+  .action-plan-container {
+    max-width: 600px;
+    margin: auto;
+    padding: 32px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .action-plan-container label {
+    display: block;
+    margin-top: 12px;
+    font-weight: bold;
+  }
+  
+  .action-plan-container input,
+  .action-plan-container textarea,
+  .action-plan-container select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 4px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+  
+  .sdg-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  form div {
+    margin-bottom: 16px;
+  }
+  
+  form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+  
+  form textarea, form select, form input[type="text"] {
+    width: 100%;
+    max-width: 400px;
+    padding: 8px;
+  }
+  
   
