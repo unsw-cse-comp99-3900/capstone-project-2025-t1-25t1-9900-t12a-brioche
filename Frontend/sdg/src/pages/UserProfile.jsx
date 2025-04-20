@@ -1,29 +1,47 @@
-// src/pages/UserProfile.jsx
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import UserCard from '../components/UserCard';
 import GroupCard from '../components/GroupCard';
 import '../components/UserProfile.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-
-// src/pages/UserProfile.jsx
 const UserProfile = () => {
+  const [user, setUser] = useState(null);
+  const token = localStorage.getItem("accessToken");
+  const navigate = useNavigate();
 
-  // Mock user data
-  const user = {
-    name: "Andrew Wenjun",
-    title: "Frontend Developer",
-    department: "Tech Team",
-    email: "andrew@example.com",
-    phone: "123-456-7890",
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await fetch("http://localhost:8000/api/auth/profile/", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = await res.json();
+        setUser({
+          ...data,
+          department: data.group
+        });
+      } catch (err) {
+        console.error("获取用户信息失败：", err);
+      }
+    };
+    fetchUser();
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    navigate("/Main"); // 假设你有登录页
   };
 
-  // Mock group data
   const groupMembers = [
     { name: "Alice Zhang", title: "Designer", dept: "UX Team" },
     { name: "Bob Li", title: "Engineer", dept: "Frontend" },
     { name: "Charlie Wang", title: "Manager", dept: "Product" }
   ];
+
+  if (!user) return <div>Loading...</div>;
 
   return (
     <div className="user-profile-container">
@@ -32,20 +50,15 @@ const UserProfile = () => {
         <Link to="/profile" className="nav-button">User Profile</Link>
         <Link to="/group" className="nav-button">Group Profile</Link>
         <Link to="/action" className="nav-button">Create Action Plan</Link>
-        <button className="logout-button">Log out</button>
+        <button className="logout-button" onClick={handleLogout}>Log out</button>
       </nav>
 
       <div className="profile-content">
         <UserCard user={user} />
         <GroupCard members={groupMembers} />
       </div>
-
-      <div className="logout-container">
-        <button className="logout-button">Log out</button>
-      </div>
     </div>
   );
 };
-
 
 export default UserProfile;
