@@ -11,6 +11,8 @@ const Navbar = () => {
       <Link to="/group" className="nav-button">Group Profile</Link>
       <Link to="/action" className="nav-button">Create Action Plan</Link>
       <Link to="/login" className="nav-button logout-button">Log out</Link>
+      <Link to="/action-plan">Create Action Plan</Link>
+
     </nav>
   );
 };
