@@ -15,9 +15,7 @@ const GroupProfile = () => {
   return (
     <div className="group-profile-container">
       <Navbar />
-
       <div className="profile-content">
-        
         <GroupCard members={groupMembers} />
         <div className="invite-section">
           <h3>Invite New Members</h3>

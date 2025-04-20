@@ -1,0 +1,87 @@
+.search-results-container {
+    padding: 30px 40px;
+    font-family: Arial, sans-serif;
+    background-color: #f5f7fa;
+    min-height: 100vh;
+  }
+  
+  .navbar {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 30px;
+    padding: 10px 20px;
+    background-color: #f2f2f2;
+    border-radius: 8px;
+    align-items: center;
+  }
+  
+  .nav-button {
+    padding: 8px 16px;
+    background-color: #3498db;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .logout-button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    height: fit-content;
+  }
+  
+  .search-header {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+  
+  .results-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .content-card {
+    background-color: #0c9cd8;
+    color: white;
+    border-radius: 10px;
+    padding: 20px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  
+  .content-card:hover {
+    transform: scale(1.02);
+  }
+  
+  .card-title {
+    font-size: 18px;
+    margin-bottom: 6px;
+  }
+  
+  .card-description {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
+  .sdg-icons {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .sdg-icon-small {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+  }
+  

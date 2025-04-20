@@ -1,30 +1,31 @@
-import React, { useState } from 'react';
-import './Style/UserProfile.css';
-
+import React, { useState } from "react";
+import axios from "axios";
 
 const UserCard = ({ user }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [formData, setFormData] = useState(user);
-
-  const handleEditToggle = () => setIsEditing(!isEditing);
-
+  const [formData, setFormData] = useState({ ...user });
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch('/api/user/profile/', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+      const token = localStorage.getItem("accessToken");
+      await axios.patch("http://localhost:8000/api/auth/update-profile/", {
+        name: formData.name,
+        title: formData.title,
+        phone: formData.phone,
+        department: formData.department
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       });
-
-      if (!response.ok) throw new Error("Update failed");
-
+      alert("保存成功！");
       setIsEditing(false);
     } catch (err) {
-      console.error("Update error:", err);
+      console.error("保存失败：", err.response?.data || err.message);
+      alert("保存失败！");
     }
   };
 
@@ -32,40 +33,32 @@ const UserCard = ({ user }) => {
     <div className="user-card">
       <div className="avatar-section">
         <div className="avatar"></div>
-        <button className="edit-button" onClick={handleEditToggle}>
+        <button className="edit-button" onClick={() => setIsEditing(!isEditing)}>
           {isEditing ? "Cancel" : "Edit"}
         </button>
       </div>
-
-      {isEditing ? (
-        <div className="user-info">
-          <input name="name" value={formData.name} onChange={handleChange} />
-          <input name="title" value={formData.title} onChange={handleChange} />
-          <input name="department" value={formData.department} onChange={handleChange} />
-          <input name="email" value={formData.email} onChange={handleChange} />
-          <input name="phone" value={formData.phone} onChange={handleChange} />
-          <button onClick={handleSubmit}>Save</button>
-        </div>
-      ) : (
-        <>
-          <div className="user-info">
-            <h2>{user.name}</h2>
-            <p>{user.title} <span className="divider">|</span> {user.department}</p>
-          </div>
-          <div className="contact-box">
-            <p><strong>Contact information:</strong></p>
-            <p>Email address: {user.email}</p>
-            <p>Phone number: {user.phone}</p>
-          </div>
-          <div className="sdg-section">
-            <h3>SDG Action Plan</h3>
-            <div className="sdg-box"></div>
-            <div className="sdg-box"></div>
-          </div>
-        </>
-      )}
+      <div className="user-info">
+        <input name="email" value={formData.email} disabled />
+        {isEditing ? (
+          <>
+            <input name="name" value={formData.name || ""} onChange={handleChange} placeholder="Name" />
+            <input name="title" value={formData.title || ""} onChange={handleChange} placeholder="Title" />
+            <input name="department" value={formData.department || ""} onChange={handleChange} placeholder="Department" />
+            <input name="phone" value={formData.phone || ""} onChange={handleChange} placeholder="Phone" />
+            <button onClick={handleSubmit}>Save</button>
+          </>
+        ) : (
+          <>
+            <h2>{formData.name}</h2>
+            <p>{formData.title} | {formData.department}</p>
+            <p>Email: {formData.email}</p>
+            <p>Phone: {formData.phone}</p>
+          </>
+        )}
+      </div>
     </div>
   );
 };
 
 export default UserCard;
+
