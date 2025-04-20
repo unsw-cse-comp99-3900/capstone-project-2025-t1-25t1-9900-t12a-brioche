@@ -1,27 +1,40 @@
-from django.contrib.auth import get_user_model
 from rest_framework import serializers
-
-User = get_user_model()
-
+from .models import User, Group, ActionPlan
 
 class RegisterSerializer(serializers.ModelSerializer):
-    greeting = serializers.SerializerMethodField()  
+    name = serializers.CharField(required=False)
+    title = serializers.CharField(required=False)
+    phone = serializers.CharField(required=False)
 
     class Meta:
         model = User
-        fields = ["email", "password", "greeting"]  
-        extra_kwargs = {
-            "password": {"write_only": True},
-        }
-
-    def get_greeting(self, obj):
-        return f"Welcome, your email is {obj.email}! - from Yueyao"  
+        fields = ["email", "password", "name", "title", "phone"]
+        extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
-        user = User.objects.create_user(**validated_data)
+        password = validated_data.pop("password", None)
+        user = User(**validated_data)
+        if password:
+            user.set_password(password)
+        user.save()
         return user
 
-
 class LoginSerializer(serializers.Serializer):
-    username = serializers.CharField()
+    email = serializers.EmailField()
     password = serializers.CharField(write_only=True)
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["id", "email", "name", "title", "phone", "group"]
+
+class GroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Group
+        fields = ["id", "name", "description", "created_at", "members"]
+
+class ActionPlanSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ActionPlan
+        fields = "__all__"
+        read_only_fields = ["user", "created_at"]
