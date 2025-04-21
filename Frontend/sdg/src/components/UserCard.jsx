@@ -1,30 +1,53 @@
-import React, { useState } from 'react';
-import './Style/UserProfile.css';
-
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const UserCard = ({ user }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [formData, setFormData] = useState(user);
+  const [formData, setFormData] = useState({
+    email: "",
+    name: "",
+    title: "",
+    department: "",
+    phone: "",
+  });
 
-  const handleEditToggle = () => setIsEditing(!isEditing);
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        email: user.email || "",
+        name: user.name || "",
+        title: user.title || "",
+        department: user.group || "",
+        phone: user.phone || "",
+      });
+    }
+  }, [user]);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch('/api/user/profile/', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+      const token = localStorage.getItem("accessToken");
+      await axios.patch("http://localhost:8000/api/auth/update-profile/", {
+        name: formData.name,
+        title: formData.title,
+        phone: formData.phone,
+        department: formData.department,
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
-
-      if (!response.ok) throw new Error("Update failed");
-
+      alert("Saved successfully!");
       setIsEditing(false);
     } catch (err) {
-      console.error("Update error:", err);
+      console.error("Save failed:", err.response?.data || err.message);
+      alert("Failed to save. Please try again.");
     }
   };
 
@@ -32,38 +55,49 @@ const UserCard = ({ user }) => {
     <div className="user-card">
       <div className="avatar-section">
         <div className="avatar"></div>
-        <button className="edit-button" onClick={handleEditToggle}>
+        <button className="edit-button" onClick={() => setIsEditing(!isEditing)}>
           {isEditing ? "Cancel" : "Edit"}
         </button>
       </div>
-
-      {isEditing ? (
-        <div className="user-info">
-          <input name="name" value={formData.name} onChange={handleChange} />
-          <input name="title" value={formData.title} onChange={handleChange} />
-          <input name="department" value={formData.department} onChange={handleChange} />
-          <input name="email" value={formData.email} onChange={handleChange} />
-          <input name="phone" value={formData.phone} onChange={handleChange} />
-          <button onClick={handleSubmit}>Save</button>
-        </div>
-      ) : (
-        <>
-          <div className="user-info">
-            <h2>{user.name}</h2>
-            <p>{user.title} <span className="divider">|</span> {user.department}</p>
-          </div>
-          <div className="contact-box">
-            <p><strong>Contact information:</strong></p>
-            <p>Email address: {user.email}</p>
-            <p>Phone number: {user.phone}</p>
-          </div>
-          <div className="sdg-section">
-            <h3>SDG Action Plan</h3>
-            <div className="sdg-box"></div>
-            <div className="sdg-box"></div>
-          </div>
-        </>
-      )}
+      <div className="user-info">
+        <input name="email" value={formData.email} disabled />
+        {isEditing ? (
+          <>
+            <input
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Enter your name"
+            />
+            <input
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+              placeholder="Enter your role"
+            />
+            <input
+              name="department"
+              value={formData.department}
+              onChange={handleChange}
+              placeholder="Enter your group"
+            />
+            <input
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              placeholder="Enter your phone"
+            />
+            <button onClick={handleSubmit}>Save</button>
+          </>
+        ) : (
+          <>
+            <h2>{formData.name || "Name"}</h2>
+            <p>{formData.title || "Role"}</p>
+            <p>{formData.department || "Group"}</p>
+            <p>{formData.phone || "Phone"}</p>
+          </>
+        )}
+      </div>
     </div>
   );
 };
