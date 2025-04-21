@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import "../components/Style/CreateActionPlan.css";
 
 const CreateActionPlan = () => {
@@ -48,11 +49,50 @@ const CreateActionPlan = () => {
     setFormData(prev => ({ ...prev, steps: updatedSteps }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Submitted Action Plan:", formData);
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  const token = localStorage.getItem("accessToken");
+
+  if (!token) {
+    alert("You must be logged in to submit an action plan.");
+    return;
+  }
+
+  try {
+    await axios.post(
+      "http://localhost:8000/api/action-plans/",
+      {
+        designer_name: formData.designerName,
+        role_and_org: formData.roleAffiliation,
+        plan_name: formData.projectName,
+        challenges: formData.mainChallenge,
+        project_description: formData.description,
+        sdg_goals: formData.sdgs,
+        impact_types: formData.impacts,
+        importance: formData.reason,
+        similar_projects: formData.comparison,
+        implementation_steps: formData.steps,
+        resources_partners: formData.resources,
+        required_skills: formData.skills,
+        avenues: formData.avenues,
+        risks: formData.risks,
+        mitigation: formData.mitigation,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
     alert("Action plan submitted!");
-  };
+  } catch (err) {
+    console.error("Submission failed:", err.response?.data || err.message);
+    alert("Submission failed. See console for details.");
+  }
+};
 
   return (
     <div className="action-plan-container">
