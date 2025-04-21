@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
+from django.db.models import Q
 from .serializers import RegisterSerializer, LoginSerializer, GroupSerializer, UserSerializer, ActionPlanSerializer
 from .models import Group, ActionPlan
 
@@ -157,3 +158,23 @@ class ActionPlanViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user)
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def fetch_user_details(request):
+    username = request.data.get("username")
+    email = request.data.get("email")
+
+    if not username and not email:
+        return Response({"error": "Please provide username or email."}, status=400)
+
+    try:
+        user = User.objects.get(Q(username=username) | Q(email=email))
+        return Response({
+            "id": user.id,
+            "name": user.name,
+            "title": user.title,
+            "department": user.group,
+        })
+    except User.DoesNotExist:
+        return Response({"error": "User not found."}, status=404)
