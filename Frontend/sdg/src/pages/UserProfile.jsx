@@ -10,7 +10,6 @@ import { Link } from 'react-router-dom';
 const UserProfile = () => {
   const [user_test, setUser] = useState(null);
 
-  // 这里 groupMembers 暂时是 mock 的
   const groupMembers = [
     { name: "Bob Li", title: "Engineer", dept: "Frontend" },
     { name: "Charlie Wang", title: "Manager", dept: "Product" }

@@ -86,6 +86,9 @@ class AuthViewSet(viewsets.ViewSet):
 
     @action(detail=False, methods=["get"], url_path="profile", permission_classes=[IsAuthenticated])
     def get_profile(self, request):
+
+        print("🛬 收到请求Authorization头:", request.headers.get("Authorization"))
+
         user = request.user
         if not user or user.is_anonymous:
             return Response({"error": "Unauthenticated"}, status=401)

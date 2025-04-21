@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "../components/Style/CreateActionPlan.css";
+import PptxGenJS from "pptxgenjs";
 
 const CreateActionPlan = () => {
   const [formData, setFormData] = useState({
@@ -48,10 +49,143 @@ const CreateActionPlan = () => {
     updatedSteps[index] = value;
     setFormData(prev => ({ ...prev, steps: updatedSteps }));
   };
-
+  const handleExportPPT = () => {
+      const pptx = new PptxGenJS();
+      const safe = (val) => (typeof val === "string" ? val : val ? String(val) : "-");
+    
+      const titleStyle = { fontSize: 20, bold: true, x: 0.5, y: 0.4 };
+      const labelStyle = { fontSize: 12, bold: true, color: "333333" };
+      const textStyle = { fontSize: 11, color: "444444" };
+      const addHeaderFooter = (slide, pageNum) => {
+        // 顶部横条
+        slide.addShape(pptx.ShapeType.rect, {
+          x: 0, y: 0, w: 10, h: 0.2,
+          fill: { color: "007ACC" }
+        });
+        // 页码
+        slide.addText(`Page ${pageNum}`, {
+          x: 8.6, y: 6.8,
+          fontSize: 10,
+          color: "888888"
+        });
+      };
+    
+      let page = 1;
+    
+      // ===== Slide 1: Summary =====
+      const slide1 = pptx.addSlide();
+      addHeaderFooter(slide1, page++);
+      slide1.addText("Action Plan Summary", titleStyle);
+    
+      const summaryPairs = [
+        ["Project Name", formData.projectName],
+        ["Designer", formData.designerName],
+        ["Role & Affiliation", formData.roleAffiliation],
+        ["Date", new Date().toLocaleDateString()]
+      ];
+      summaryPairs.forEach((pair, i) => {
+        const [label, value] = pair;
+        const x = i % 2 === 0 ? 0.5 : 5;
+        const y = 1.0 + Math.floor(i / 2) * 0.5;
+        slide1.addText(`${label}: ${safe(value)}`, {
+          x, y, w: 4.4, fontSize: 11, color: "333333"
+        });
+      });
+    
+      const descriptionFields = [
+        ["Main Challenge", formData.mainChallenge],
+        ["Project Description", formData.description],
+        ["Why Important", formData.reason],
+        ["Example & Compare", formData.comparison]
+      ];
+      descriptionFields.forEach(([label, value], i) => {
+        slide1.addText([
+          { text: `${label}\n`, options: labelStyle },
+          { text: safe(value), options: textStyle }
+        ], {
+          x: 0.5 + (i % 2) * 4.5,
+          y: 2.2 + Math.floor(i / 2) * 1.4,
+          w: 4.2, h: 1.5, margin: 0.1
+        });
+      });
+    
+      // ===== Slide 2: SDG & Impact =====
+      const slide2 = pptx.addSlide();
+      addHeaderFooter(slide2, page++);
+      slide2.addText("Selected SDGs and Types of Impact", titleStyle);
+    
+      slide2.addText("SDG Goals:", { ...labelStyle, x: 0.5, y: 1.0 });
+      (formData.selectedSDGs || []).forEach((goal, i) => {
+        slide2.addText(`• ${goal}`, { ...textStyle, x: 0.7, y: 1.3 + i * 0.3 });
+      });
+    
+      slide2.addText("Impact Types:", { ...labelStyle, x: 5, y: 1.0 });
+      (formData.selectedImpacts || []).forEach((impact, i) => {
+        slide2.addText(`• ${impact}`, { ...textStyle, x: 5.2, y: 1.3 + i * 0.3 });
+      });
+    
+      // 插入 SDG logo（远程图）
+      slide2.addImage({
+        x: 7.5, y: 0.3, w: 2, h: 2,
+        url: "https://sdgs.un.org/sites/default/files/2020-09/SDG_Logo_Color_0.png"
+      });
+    
+      // ===== Slide 3: Roadmap =====
+      const slide3 = pptx.addSlide();
+      addHeaderFooter(slide3, page++);
+      slide3.addText("Implementation Roadmap", titleStyle);
+      const steps = formData.steps || [];
+    
+      const roadmapColors = ["DCEEF7", "D9EAD3", "FFF2CC", "F4CCCC", "EAD1DC", "CFE2F3"];
+    
+      steps.forEach((step, index) => {
+        const boxHeight = 0.6;
+        const yPos = 1.0 + index * (boxHeight + 0.2);
+        slide3.addShape(pptx.ShapeType.roundRect, {
+          x: 0.5,
+          y: yPos,
+          w: 9,
+          h: boxHeight,
+          fill: { color: roadmapColors[index % roadmapColors.length] },
+          line: { color: "AAAAAA" },
+          round: true,
+        });
+        slide3.addText(`Step ${index + 1}: ${safe(step)}`, {
+          x: 0.6,
+          y: yPos + 0.15,
+          w: 8.8,
+          fontSize: 11,
+          color: "222222"
+        });
+      });
+    
+      // ===== Slide 4: Resources / Risks =====
+      const slide4 = pptx.addSlide();
+      addHeaderFooter(slide4, page++);
+      slide4.addText("Resources, Skills & Mitigation", titleStyle);
+    
+      const analysisFields = [
+        ["Resources Needed", formData.resources],
+        ["Skills Required", formData.skills],
+        ["Impact Avenues", formData.avenues],
+        ["Risks", formData.risks],
+        ["Mitigation", formData.mitigation]
+      ];
+      analysisFields.forEach(([label, value], i) => {
+        slide4.addText([
+          { text: `${label}\n`, options: labelStyle },
+          { text: safe(value), options: textStyle }
+        ], {
+          x: 0.5 + (i % 2) * 4.5,
+          y: 1.0 + Math.floor(i / 2) * 1.5,
+          w: 4.2, h: 1.5, margin: 0.1
+        });
+      });
+    
+      pptx.writeFile("ActionPlan.pptx");
+  };
   const handleSubmit = async (e) => {
   e.preventDefault();
-
   const token = localStorage.getItem("accessToken");
 
   if (!token) {
@@ -207,6 +341,9 @@ const CreateActionPlan = () => {
         </div>
 
         <button type="submit" className="submit-button">Submit Action Plan</button>
+        <button type="button" onClick={handleExportPPT} className="submit-button" style={{ marginTop: "12px" }}>
+            Export as PPT
+        </button>
       </form>
     </div>
   );
