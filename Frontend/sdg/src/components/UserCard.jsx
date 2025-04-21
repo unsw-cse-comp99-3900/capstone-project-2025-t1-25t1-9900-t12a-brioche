@@ -1,11 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const UserCard = ({ user }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [formData, setFormData] = useState({ ...user });
+  const [formData, setFormData] = useState({
+    email: "",
+    name: "",
+    title: "",
+    department: "",
+    phone: "",
+  });
+
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        email: user.email || "",
+        name: user.name || "",
+        title: user.title || "",
+        department: user.group || "",
+        phone: user.phone || "",
+      });
+    }
+  }, [user]);
+
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   const handleSubmit = async () => {
@@ -15,17 +37,17 @@ const UserCard = ({ user }) => {
         name: formData.name,
         title: formData.title,
         phone: formData.phone,
-        department: formData.department
+        department: formData.department,
       }, {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
-      alert("保存成功！");
+      alert("Saved successfully!");
       setIsEditing(false);
     } catch (err) {
-      console.error("保存失败：", err.response?.data || err.message);
-      alert("保存失败！");
+      console.error("Save failed:", err.response?.data || err.message);
+      alert("Failed to save. Please try again.");
     }
   };
 
@@ -41,18 +63,44 @@ const UserCard = ({ user }) => {
         <input name="email" value={formData.email} disabled />
         {isEditing ? (
           <>
-            <input name="name" value={formData.name || ""} onChange={handleChange} placeholder="Name" />
-            <input name="title" value={formData.title || ""} onChange={handleChange} placeholder="Title" />
-            <input name="department" value={formData.department || ""} onChange={handleChange} placeholder="Department" />
-            <input name="phone" value={formData.phone || ""} onChange={handleChange} placeholder="Phone" />
+            <input
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Enter your name"
+            />
+            <input
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+              placeholder="Enter your role"
+            />
+            <input
+              name="department"
+              value={formData.department}
+              onChange={handleChange}
+              placeholder="Enter your group"
+            />
+            <input
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              placeholder="Enter your phone"
+            />
             <button onClick={handleSubmit}>Save</button>
           </>
         ) : (
           <>
-            <h2>{formData.name}</h2>
-            <p>{formData.title} | {formData.department}</p>
-            <p>Email: {formData.email}</p>
-            <p>Phone: {formData.phone}</p>
+            {formData.name || formData.title || formData.department || formData.phone ? (
+              <>
+                <h2>{formData.name}</h2>
+                <p>{formData.title}</p>
+                <p>{formData.department}</p>
+                <p>{formData.phone}</p>
+              </>
+            ) : (
+              <p>Please click Edit to complete your profile.</p>
+            )}
           </>
         )}
       </div>
@@ -61,4 +109,3 @@ const UserCard = ({ user }) => {
 };
 
 export default UserCard;
-

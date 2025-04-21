@@ -1,3 +1,4 @@
+// src/pages/GroupProfile.jsx
 import React from 'react';
 import GroupCard from '../components/GroupCard';
 import Navbar from '../components/Navbar';
@@ -14,17 +15,21 @@ const GroupProfile = () => {
   
   return (
     <div className="group-profile-container">
-      <Navbar />
-      <div className="profile-content">
-        <GroupCard members={groupMembers} />
-        <div className="invite-section">
-          <h3>Invite New Members</h3>
-          <label>Username</label>
-          <input type="text" placeholder="Enter username" />
-          <p className="or-separator">OR</p>
-          <label>Email</label>
-          <input type="email" placeholder="Enter email" />
-          <button>Invite</button>
+      <div className="profile-main-wrapper">
+        <div className="top-banner">
+          <Navbar />
+        </div>
+        <div className="profile-content">
+          <GroupCard members={groupMembers} />
+          <div className="invite-section">
+            <h2>Invite New Members</h2>
+            <label>Username</label>
+            <input type="text" placeholder="Enter username" />
+            <p className="or-separator">OR</p>
+            <label>Email</label>
+            <input type="email" placeholder="Enter email" />
+            <button>Invite</button>
+          </div>
         </div>
       </div>
     </div>
