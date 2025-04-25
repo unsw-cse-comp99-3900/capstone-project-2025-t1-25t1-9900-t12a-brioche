@@ -60,7 +60,6 @@ const UserCard = ({ user }) => {
         </button>
       </div>
       <div className="user-info">
-        <input name="email" value={formData.email} disabled />
         {isEditing ? (
           <>
             <input
@@ -93,10 +92,11 @@ const UserCard = ({ user }) => {
           <>
             {formData.name || formData.title || formData.department || formData.phone ? (
               <>
-                <h2>{formData.name}</h2>
-                <p>{formData.title}</p>
-                <p>{formData.department}</p>
-                <p>{formData.phone}</p>
+                <h2>{formData.email}</h2>
+                <h1>{formData.name}</h1>
+                <p>User title: {formData.title}</p>
+                <p>Department: {formData.department}</p>
+                <p>Phone number: {formData.phone}</p>
               </>
             ) : (
               <p>Please click Edit to complete your profile.</p>

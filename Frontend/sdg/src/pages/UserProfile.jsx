@@ -8,23 +8,32 @@ import '../components/Style/UserProfile.css';
 import { Link } from 'react-router-dom';
 
 const UserProfile = () => {
-  const [user_test, setUser] = useState(null);
+  const [user_data, setUser] = useState(null);
+
 
   const groupMembers = [
     { name: "Bob Li", title: "Engineer", dept: "Frontend" },
     { name: "Charlie Wang", title: "Manager", dept: "Product" }
   ];
-
+  
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const token = localStorage.getItem("accessToken");
-        const response = await axios.get('/api/auth/profile/', {
+        const userResponse = await axios.get('/api/auth/profile/', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        setUser(response.data);
+
+        // const groupResponse = await axios.get('/api/auth/user detail/', {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // });
+
+        setUser(userResponse.data);
+        // setGroup(groupResponse.data);
       } catch (error) {
         console.error('Failed to fetch user data:', error);
       }
@@ -40,7 +49,7 @@ const UserProfile = () => {
           <Navbar />
         </div>
         <div className="profile-content">
-          <UserCard user={user_test} />
+          <UserCard user={user_data} />
           <GroupCard members={groupMembers} />
         </div>
       </div>
