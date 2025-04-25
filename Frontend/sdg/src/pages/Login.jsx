@@ -1,59 +1,52 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
-import AuthLayout from "../components/AuthLayout";
-import Button from "../components/Button";
+// src/pages/CreateActionPlanStep2.jsx
+import React from 'react';
+import './CreateActionPlan.css';
+import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
-  const initialValues = { email: "", password: "" };
+const CreateActionPlanStep2 = () => {
+  const navigate = useNavigate();
 
-  const validationSchema = Yup.object({
-    email: Yup.string().email("Invalid email address").required("Please enter email"),
-    password: Yup.string().required("Please enter password"),
-  });
-
-  const handleSubmit = (values) => {
-    console.log("login data:", values);
+  const handleNext = (e) => {
+    e.preventDefault();
+    // TODO: Save current step data here
+    navigate('/action/step3'); // or next route when ready
   };
 
   return (
-    <AuthLayout>
-       <div className="min-h-screen bg-gray-100">
-        <nav className="bg-cyan-600 text-white px-6 py-2 flex gap-6">
-          <Link to="/" className="hover:underline">Main Page</Link>
-          <Link to="/profile" className="hover:underline">User Profile</Link>
-          <Link to="/group" className="hover:underline">Group Profile</Link>
-          <Link to="/plan" className="hover:underline">Create Action Plan</Link>
-        </nav>
+    <div className="cap-form-container">
+      <nav className="cap-navbar">
+        <a href="/main" className="cap-nav-button">Main Page</a>
+        <a href="/profile" className="cap-nav-button">User Profile</a>
+        <a href="/group" className="cap-nav-button">Group Profile</a>
+        <a href="/action" className="cap-nav-button">Create Action Plan</a>
+      </nav>
+
+      <div className="cap-form-box">
+        <h2>Create SDG Action Plan</h2>
+        <h4>Step 2/7: Project Description</h4>
+
+        <form className="cap-form-content" onSubmit={handleNext}>
+          <label>Analysis ID:</label>
+          <input type="text" placeholder="Enter Analysis ID" />
+
+          <label>Detailed description of the impact project:</label>
+          <textarea rows="6" maxLength={200} placeholder="Max 200 words" />
+
+          <label>Select 1 Sustainable Development Goal:</label>
+          <select>
+            <option value="">-- Select an SDG --</option>
+            {[...Array(17)].map((_, i) => (
+              <option key={i + 1} value={`Goal ${i + 1}`}>Goal {i + 1}</option>
+            ))}
+          </select>
+
+          <div className="cap-button-wrapper">
+            <button type="submit">Next</button>
+          </div>
+        </form>
       </div>
-      <h2 className="text-2xl font-bold mb-4">Login</h2>
-      <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
-        {({ errors, touched }) => (
-          <Form>
-            <div className="mb-4">
-              <Field name="email" placeholder="Email" className="w-full p-2 border rounded" />
-              {errors.email && touched.email && <p className="text-red-500 text-sm">{errors.email}</p>}
-            </div>
-
-            <div className="mb-4">
-              <Field name="password" type="password" placeholder="password" className="w-full p-2 border rounded" />
-              {errors.password && touched.password && <p className="text-red-500 text-sm">{errors.password}</p>}
-            </div>
-
-            <Button text="Login" type="submit" />
-
-            <div className="text-center mt-4">
-              <Link to="/reset-password" className="text-blue-500 text-sm">Forget password? </Link>
-            </div>
-            <div className="text-center mt-2">
-              <Link to="/register" className="text-blue-500 text-sm">Not account? register it!</Link>
-            </div>
-          </Form>
-        )}
-      </Formik>
-    </AuthLayout>
+    </div>
   );
 };
 
-export default Login;
+export default CreateActionPlanStep2;
