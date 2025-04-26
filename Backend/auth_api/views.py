@@ -4,10 +4,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import action, api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
-from google.oauth2 import id_token
-from google.auth.transport import requests as google_requests
-from django.db.models import Q
-from .serializers import RegisterSerializer, LoginSerializer, GroupSerializer, UserSerializer, ActionPlanSerializer
+from .serializers import RegisterSerializer, LoginSerializer, GroupSerializer, ActionPlanSerializer
 from .models import Group, ActionPlan
 
 User = get_user_model()
@@ -47,33 +44,6 @@ class AuthViewSet(viewsets.ViewSet):
             }, status=status.HTTP_200_OK)
         return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
 
-    @action(detail=False, methods=["post"], url_path="google-login", permission_classes=[AllowAny])
-    def google_login(self, request):
-        token = request.data.get("token")
-        if not token:
-            return Response({"error": "No token provided"}, status=400)
-
-        try:
-            idinfo = id_token.verify_oauth2_token(token, google_requests.Request())
-            email = idinfo.get("email")
-            if not email:
-                return Response({"error": "Invalid token, email not found"}, status=400)
-
-            user, created = User.objects.get_or_create(email=email)
-            if created:
-                user.set_unusable_password()
-                user.save()
-
-            refresh = RefreshToken.for_user(user)
-            return Response({
-                "message": "Google login successful",
-                "access": str(refresh.access_token),
-                "refresh": str(refresh)
-            })
-
-        except Exception as e:
-            return Response({"error": f"Token verification failed: {str(e)}"}, status=400)
-
     @action(detail=False, methods=["patch"], url_path="update-profile", permission_classes=[IsAuthenticated])
     def update_profile(self, request):
         user = request.user
@@ -86,9 +56,6 @@ class AuthViewSet(viewsets.ViewSet):
 
     @action(detail=False, methods=["get"], url_path="profile", permission_classes=[IsAuthenticated])
     def get_profile(self, request):
-
-        print("🛬 收到请求Authorization头:", request.headers.get("Authorization"))
-
         user = request.user
         if not user or user.is_anonymous:
             return Response({"error": "Unauthenticated"}, status=401)
@@ -134,6 +101,19 @@ class GroupViewSet(viewsets.ModelViewSet):
         group.members.remove(user)
         return Response({"message": "Member removed successfully."})
 
+# New member detail
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def group_members_detail(request):
+    groups = Group.objects.prefetch_related('members').all()
+    result = []
+    for group in groups:
+        members = []
+        for member in group.members.all():
+            members.append([member.name, member.title, member.group])
+        result.append(members)
+    return Response(result)
+
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def reset_password(request):
@@ -161,23 +141,3 @@ class ActionPlanViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user)
-
-@api_view(["POST"])
-@permission_classes([IsAuthenticated])
-def fetch_user_details(request):
-    username = request.data.get("username")
-    email = request.data.get("email")
-
-    if not username and not email:
-        return Response({"error": "Please provide username or email."}, status=400)
-
-    try:
-        user = User.objects.get(Q(username=username) | Q(email=email))
-        return Response({
-            "id": user.id,
-            "name": user.name,
-            "title": user.title,
-            "department": user.group,
-        })
-    except User.DoesNotExist:
-        return Response({"error": "User not found."}, status=404)
