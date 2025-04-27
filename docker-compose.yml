@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./Backend:/app
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./Frontend/sdg
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./Frontend/sdg:/app
+    stdin_open: true
+    tty: true
+
+  db:
+    image: mysql:8.0
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: 7994506wzh
+      MYSQL_DATABASE: brioche
+    ports:
+     - "3307:3306"
+    volumes:
+     - mysql_data:/var/lib/mysql
+
+
+volumes:
+  mysql_data:

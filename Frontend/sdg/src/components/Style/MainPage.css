@@ -1,0 +1,151 @@
+  .main-page-container {
+    min-height: 100vh;
+    width: 90vw;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+    background-color: #f5f7fa;
+  }
+  
+  .navbar {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 30px;
+    padding: 10px 20px;
+    background-color: #f2f2f2;
+    border-radius: 8px;
+  }
+  
+
+  .nav-button {
+    padding: 8px 16px;
+    background-color: #3498db;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  .nav-button:hover {
+    background-color: #2c80b4;
+  }
+  
+  
+  .top-section {
+    margin-top: 80px;
+    margin-bottom: 40px;
+  }
+  
+  .logo-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 30px;
+  }
+  
+  .un-logo,
+  .sdg-logo {
+    height: 80px;
+    object-fit: contain;
+  }
+  
+  .search-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+  
+  .search-section h2 {
+    margin-bottom: 10px;
+    font-size: 24px;
+  }
+  
+  .search-box {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    width: 60%;
+    min-width: 100px;
+  }
+  
+  .search-box input {
+    flex: 12;
+    padding: 10px;
+    width: 60%;
+    max-width: 500px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+  }
+  
+  .search-box button {
+    flex : 1;
+    padding: 10px 16px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .sdg-grid {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    gap: 10px;
+    justify-items: center;
+  }
+  
+  .sdg-link {
+    display: block;
+    transition: transform 0.2s ease;
+  }
+  
+  .sdg-link:hover {
+    transform: scale(1.05);
+  }
+  
+  .sdg-icon {
+    width: 100px;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+  }
+
+  .logout-button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    height: fit-content;
+
+    display: inline-block;
+    white-space: nowrap;
+
+  }
+  @media (max-width: 1068px) {
+    .sdg-grid {
+      grid-template-columns: repeat(6, 1fr);
+    }
+  }
+  @media (max-width: 768px) {
+    .sdg-grid {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+  @media (max-width: 600px) {
+    .sdg-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  
+  
+
+  
