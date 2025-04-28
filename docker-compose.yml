@@ -20,6 +20,7 @@ services:
       - "3000:3000"
     volumes:
       - ./Frontend/sdg:/app
+      - /app/node_modules
     stdin_open: true
     tty: true
 
